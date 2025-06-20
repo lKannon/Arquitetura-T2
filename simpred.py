@@ -1,5 +1,5 @@
-import sys
-import math
+import sys      #Leitura de parametros
+import math     #Operacoes com log
 
 #Calculo do indice de acesso no BPB
 def extrair_indice_bpb(endereco, tamanho_bpb):
@@ -7,17 +7,18 @@ def extrair_indice_bpb(endereco, tamanho_bpb):
     return (endereco >> 2) & (tamanho_bpb - 1)
 
 #Automato de 4 estados: Para simular a segunda predicao a ser tomada
+# Vetor 0 1  | 2 3 onde deve sempre dois incrementos para troca de estado
 def preditor_2bits_estado_atual(estado, ocorreu):
     if ocorreu == 'T':
-        return min(estado + 1, 3)
+        return min(estado + 1, 3) #Garante que o maximo nao exceda 3
     else:
-        return max(estado - 1, 0)
+        return max(estado - 1, 0) #Garante que o minimo nao exceda 0
 
-def preditor_2bits_predicao(estado):
+def preditor_2bits_predicao(estado): #Faz a predicao separadamente para facilitar
     return 'T' if estado >= 2 else 'N'
 
 def main():
-    if len(sys.argv) != 3:
+    if len(sys.argv) != 3: #Sys.argv para ler argumentos da entrada
         print("Uso: python simpred.py <arquivoTrace> <nLinhasBPB>")
         sys.exit(1)
 
@@ -34,7 +35,7 @@ def main():
 
     with open(nome_arquivo, 'r') as arquivo:
         for linha in arquivo:
-            total += 1
+            total += 1 #Contagem das instrucoes
             endereco_str, alvo_str, ocorreu = linha.strip().split()
             endereco = int(endereco_str)
             alvo = int(alvo_str)
