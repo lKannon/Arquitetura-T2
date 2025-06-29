@@ -1,6 +1,7 @@
 import sys      #Leitura de parametros
 import math     #Operacoes com log
 
+
 #Calculo do indice de acesso no BPB
 def extrair_indice_bpb(endereco, tamanho_bpb):
     bits_index = int(math.log2(tamanho_bpb))
